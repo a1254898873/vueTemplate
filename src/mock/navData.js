@@ -11,5 +11,7 @@ export default
     { title: '会员管理', icon: 'el-icon-data-line', name: 'guest', path: '/guest', component: 'Guest' },
     { title: '订单管理', icon: 'el-icon-data-line', name: 'order', path: '/order', component: 'Order' },
     { title: '订单详细信息', icon: 'el-icon-data-line', name: 'order_detail', path: '/order_detail', component: 'OrderDetail' },
-    { title: '修改密码', icon: 'el-icon-data-line', name: 'account', path: '/account', component: 'Account' }]
+    { title: '修改密码', icon: 'el-icon-data-line', name: 'account', path: '/account', component: 'Account' },
+    { title: '权限管理', icon: 'el-icon-data-line', name: 'permission', path: '/permission', component: 'Permission' },
+    { title: '会员管理', icon: 'el-icon-data-line', name: 'user', path: '/user', component: 'User' }]
 

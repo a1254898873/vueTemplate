@@ -76,6 +76,20 @@ export default [
                 icon: 'el-icon-data-line',
                 menuId: 2001,
                 children: []
+            },
+            {
+                url: '/permission',
+                name: '权限管理',
+                icon: 'el-icon-data-line',
+                menuId: 2002,
+                children: []
+            },
+            {
+                url: '/user',
+                name: '会员管理',
+                icon: 'el-icon-data-line',
+                menuId: 2003,
+                children: []
             }
         ]
     }
