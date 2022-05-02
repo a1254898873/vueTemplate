@@ -34,9 +34,11 @@ export default {
       myHeaders: "",
     });
 
+    //协议头加token
     state.myHeaders = localGet("token");
     state.imageUrl = props.avatar;
 
+    //上传的地址
     const getAvatarAction = computed(() => {
       return config[import.meta.env.MODE].baseUrl + "/upload/avatar";
     });

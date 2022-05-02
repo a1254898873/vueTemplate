@@ -90,6 +90,20 @@ export default [
                 icon: 'el-icon-data-line',
                 menuId: 2003,
                 children: []
+            },
+            {
+                url: '/role',
+                name: '角色管理',
+                icon: 'el-icon-data-line',
+                menuId: 2004,
+                children: []
+            },
+            {
+                url: '/dept',
+                name: '部门管理',
+                icon: 'el-icon-data-line',
+                menuId: 2005,
+                children: []
             }
         ]
     }
