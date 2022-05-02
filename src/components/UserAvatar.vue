@@ -18,7 +18,7 @@
 <script>
 import { ElMessage } from "element-plus";
 import { reactive, toRefs, computed, watch } from "vue";
-import { localGet } from "@/utils";
+import { localGet } from "@/utils/auth";
 import config from "~/config";
 export default {
   name: "UserAvatar",

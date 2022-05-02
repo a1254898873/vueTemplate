@@ -1,19 +1,4 @@
-export function localGet (key) {
-  const value = window.localStorage.getItem(key)
-  try {
-    return JSON.parse(window.localStorage.getItem(key))
-  } catch (error) {
-    return value
-  }
-}
 
-export function localSet (key, value) {
-  window.localStorage.setItem(key, JSON.stringify(value))
-}
-
-export function localRemove (key) {
-  window.localStorage.removeItem(key)
-}
 
 // 判断内容是否含有表情字符，现有数据库不支持。
 export function hasEmoji (str = '') {

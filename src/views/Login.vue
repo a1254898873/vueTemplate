@@ -94,7 +94,7 @@
 import config from "~/config";
 import axios from "@/utils/axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
-import { localSet } from "@/utils";
+import { localSet } from "@/utils/auth";
 export default {
   name: "Login",
   setup() {

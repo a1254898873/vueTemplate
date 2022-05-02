@@ -1,9 +1,8 @@
 import axios from 'axios'
 import router from '@/router/index'
-import { localGet } from './index'
+import { localGet, localRemove } from './auth'
 import config from '~/config'
 import { ElMessage } from 'element-plus'
-import { localRemove } from '@/utils'
 
 // 这边由于后端没有区分测试和正式，姑且都写成一个接口。
 axios.defaults.baseURL = config[import.meta.env.MODE].baseUrl

@@ -4,20 +4,13 @@
       <el-aside class="aside">
         <div class="head">
           <div>
-            <img
-              src="./assets/logo.png"
-              alt="logo"
-            />
+            <img src="./assets/logo.png" alt="logo" />
             <span>vue3 admin</span>
           </div>
         </div>
         <div class="line" />
-        <el-menu
-          background-color="#222832"
-          text-color="#fff"
-          :router="true"
-        >
-          <MenuItem v-for="(item) in menus" :key="item.menuId" :data="item" />
+        <el-menu background-color="#222832" text-color="#fff" :router="true">
+          <MenuItem v-for="item in menus" :key="item.menuId" :data="item" />
         </el-menu>
       </el-aside>
       <el-container class="content">
@@ -41,7 +34,8 @@ import { onUnmounted, reactive } from "vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import { useRouter } from "vue-router";
-import { pathMap, localGet } from "@/utils";
+import { localGet } from "@/utils/auth";
+import { pathMap } from "@/utils";
 export default {
   name: "App",
   components: {
@@ -51,7 +45,7 @@ export default {
   },
   setup() {
     const menus = menuData;
-    const noMenu = ["/login","/register"];
+    const noMenu = ["/login", "/register"];
     const router = useRouter();
     const state = reactive({
       defaultOpen: ["1", "2", "3", "4"],

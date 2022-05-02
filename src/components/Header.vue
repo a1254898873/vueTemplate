@@ -33,7 +33,8 @@
 import { onMounted, reactive, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from '@/utils/axios'
-import { localRemove, pathMap } from '@/utils'
+import {localRemove} from '@/utils/auth'
+import {  pathMap } from '@/utils'
 export default {
   name: 'Header',
   setup() {
