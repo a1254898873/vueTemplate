@@ -3,6 +3,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import App from './App.vue'
 import router from './router/index'
+import { createPinia } from 'pinia'
 
 // import 'element-plus/lib/theme-chalk/index.css'
 
@@ -33,22 +34,27 @@ app.config.globalProperties.$filters = {
       return url
     }
   },
-  resetImgUrl(imgObj, imgSrc, maxErrorNum) {  
-    if (maxErrorNum > 0) { 
-      imgObj.onerror = function() {  
-        resetImgUrl(imgObj, imgSrc, maxErrorNum - 1) 
+  resetImgUrl(imgObj, imgSrc, maxErrorNum) {
+    if (maxErrorNum > 0) {
+      imgObj.onerror = function () {
+        resetImgUrl(imgObj, imgSrc, maxErrorNum - 1)
       }
-      setTimeout(function() {  
-        imgObj.src = imgSrc  
+      setTimeout(function () {
+        imgObj.src = imgSrc
       }, 500)
-    } else {  
-      imgObj.onerror = null  
+    } else {
+      imgObj.onerror = null
       imgObj.src = imgSrc
-    }  
-  }  
+    }
+  }
 }
 
 
+// 实例化 Pinia
+const pinia = createPinia()
+
+
+app.use(pinia)
 app.use(ElementPlus)
 app.use(router)
 

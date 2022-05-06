@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <el-container v-if="state.showMenu" class="container">
+    <el-container v-if="showMenu" class="container">
       <el-aside class="aside">
         <div class="head">
           <div>
@@ -10,7 +10,7 @@
         </div>
         <div class="line" />
         <el-menu background-color="#222832" text-color="#fff" :router="true">
-          <MenuItem v-for="item in menus" :key="item.menuId" :data="item" />
+          <MenuItem v-for="item in menus" :key="item.pid" :data="item" />
         </el-menu>
       </el-aside>
       <el-container class="content">
@@ -28,11 +28,15 @@
 </template>
 
 <script>
+//导入状态仓库
+import { mainStore } from "@/store";
+import axios from "@/utils/axios";
 import menuData from "@/mock/menuData";
+//导入组件
 import MenuItem from "@/components/MenuItem.vue";
-import { onUnmounted, reactive } from "vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import { onMounted, onUnmounted, reactive,toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { localGet } from "@/utils/auth";
 import { pathMap } from "@/utils";
@@ -44,17 +48,43 @@ export default {
     MenuItem,
   },
   setup() {
-    const menus = menuData;
+    //实例化仓库
+    const store = mainStore();
     const noMenu = ["/login", "/register"];
     const router = useRouter();
     const state = reactive({
       defaultOpen: ["1", "2", "3", "4"],
       showMenu: true,
       currentPath: "/dashboard",
+      menus:[],
       count: {
         number: 1,
       },
     });
+
+    //初始化
+    onMounted(() => {
+      const pathname = window.location.hash.split("/")[1] || "";
+      if (!["login", "register"].includes(pathname)) {
+        getUserInfo();
+      }
+    });
+
+    //获取用户信息
+    const getUserInfo = async () => {
+      if (store.userInfo === null) {
+        const userInfo = await axios.get("/sys/user/info");
+        store.userInfo = userInfo;
+        state.menus = userInfo.menus;
+      } else {
+        state.userInfo = store.userInfo;
+        state.menus = store.userInfo.menus;
+      }
+      console.log(state.menus,333)
+    };
+
+
+
     // 监听浏览器原生回退事件
     if (window.history && window.history.pushState) {
       history.pushState(null, null, document.URL);
@@ -92,8 +122,7 @@ export default {
     });
 
     return {
-      state,
-      menus,
+      ...toRefs(state),
     };
   },
 };

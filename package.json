@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.26.1",
     "element-plus": "1.1.0-beta.10",
+    "pinia": "^2.0.13",
     "qs": "^6.10.3",
     "vite-plugin-babel-import": "^2.0.5",
     "vue": "^3.2.25",
