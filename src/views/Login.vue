@@ -2,10 +2,7 @@
   <div class="login-body">
     <div class="login-container">
       <div class="head">
-        <img
-          class="logo"
-          src="../assets/logo.png"
-        />
+        <img class="logo" src="../assets/logo.png" />
         <div class="name">
           <div class="title">登录</div>
           <div class="tips">Vue3.0 后台管理系统</div>
@@ -91,6 +88,7 @@
 </template>
 
 <script>
+import { mainStore } from "@/store";
 import config from "~/config";
 import axios from "@/utils/axios";
 import { reactive, ref, toRefs, onMounted } from "vue";
@@ -98,6 +96,8 @@ import { localSet } from "@/utils/auth";
 export default {
   name: "Login",
   setup() {
+    // 实例化仓库
+    const store = mainStore();
     const loginForm = ref(); //表单的ref，可以用来验证表单内容
     const state = reactive({
       ruleForm: {
@@ -131,8 +131,25 @@ export default {
       loginForm.value.validate((valid) => {
         if (valid) {
           axios.post("/auth/login", state.ruleForm).then((res) => {
-            console.log(res);
             localSet("token", res.prefix + res.value);
+            axios({
+              method: "get",
+              url: "/sys/permission/router",
+              headers: {
+                Authorization: res.prefix + res.value,
+              },
+            }).then((res) => {
+              store.routers = res;
+              //添加动态路由
+              routers.forEach((element) => {
+                router.addRoute({
+                  path: element.href,
+                  meta: { title: element.title },
+                  name: element.title,
+                  component: () => import(`./views/${element.component}.vue`),
+                });
+              });
+            });
             window.location.href = "/";
           });
         } else {
@@ -192,7 +209,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-color: #87CEFA;
+  background-color: #87cefa;
   /* background-image: linear-gradient(25deg, #077f7c, #3aa693, #5ecfaa, #7ffac2); */
 }
 .login-container {
@@ -208,12 +225,11 @@ export default {
   align-items: center;
   padding: 40px 0 20px 0;
 }
-.register-tip{
+.register-tip {
   display: flex;
   justify-content: center;
   margin-top: -30px;
   margin-bottom: -20px;
-
 }
 .head img {
   width: 100px;

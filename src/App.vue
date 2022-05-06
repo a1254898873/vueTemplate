@@ -36,9 +36,10 @@ import menuData from "@/mock/menuData";
 import MenuItem from "@/components/MenuItem.vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
-import { onMounted, onUnmounted, reactive,toRefs } from "vue";
+import { onMounted, onUnmounted, reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
-import { localGet } from "@/utils/auth";
+//导入工具
+import { localGet, localSet } from "@/utils/auth";
 import { pathMap } from "@/utils";
 export default {
   name: "App",
@@ -56,7 +57,7 @@ export default {
       defaultOpen: ["1", "2", "3", "4"],
       showMenu: true,
       currentPath: "/dashboard",
-      menus:[],
+      menus: [],
       count: {
         number: 1,
       },
@@ -66,9 +67,38 @@ export default {
     onMounted(() => {
       const pathname = window.location.hash.split("/")[1] || "";
       if (!["login", "register"].includes(pathname)) {
+        // getRouter();
         getUserInfo();
       }
     });
+
+    // const getRouter = async () => {
+    //   let routers = localGet("router");
+    //   if (routers === null || routers === undefined) {
+    //     routers = await axios.get("/sys/permission/router");
+    //     localSet("router", routers);
+    //     //添加动态路由
+    //     routers.forEach((element) => {
+    //       router.addRoute({
+    //         path: element.href,
+    //         meta: { title: element.title },
+    //         name: element.title,
+    //         component: () => import(`./views/${element.component}.vue`),
+    //       });
+    //     });
+    //   } else {
+    //     console.log(1234);
+    //     //添加动态路由
+    //     routers.forEach((element) => {
+    //       router.addRoute({
+    //         path: element.href,
+    //         meta: { title: element.title },
+    //         name: element.title,
+    //         component: () => import(`./views/${element.component}.vue`),
+    //       });
+    //     });
+    //   }
+    // };
 
     //获取用户信息
     const getUserInfo = async () => {
@@ -80,10 +110,7 @@ export default {
         state.userInfo = store.userInfo;
         state.menus = store.userInfo.menus;
       }
-      console.log(state.menus,333)
     };
-
-
 
     // 监听浏览器原生回退事件
     if (window.history && window.history.pushState) {
