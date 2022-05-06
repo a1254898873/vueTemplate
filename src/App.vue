@@ -31,7 +31,6 @@
 //导入状态仓库
 import { mainStore } from "@/store";
 import axios from "@/utils/axios";
-import menuData from "@/mock/menuData";
 //导入组件
 import MenuItem from "@/components/MenuItem.vue";
 import Header from "@/components/Header.vue";
@@ -39,8 +38,7 @@ import Footer from "@/components/Footer.vue";
 import { onMounted, onUnmounted, reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 //导入工具
-import { localGet, localSet } from "@/utils/auth";
-import { pathMap } from "@/utils";
+import { localGet } from "@/utils/auth";
 export default {
   name: "App",
   components: {
@@ -51,54 +49,21 @@ export default {
   setup() {
     //实例化仓库
     const store = mainStore();
+    //不需要显示左侧菜单的路径
     const noMenu = ["/login", "/register"];
     const router = useRouter();
     const state = reactive({
-      defaultOpen: ["1", "2", "3", "4"],
       showMenu: true,
-      currentPath: "/dashboard",
       menus: [],
-      count: {
-        number: 1,
-      },
     });
 
     //初始化
     onMounted(() => {
       const pathname = window.location.hash.split("/")[1] || "";
       if (!["login", "register"].includes(pathname)) {
-        // getRouter();
         getUserInfo();
       }
     });
-
-    // const getRouter = async () => {
-    //   let routers = localGet("router");
-    //   if (routers === null || routers === undefined) {
-    //     routers = await axios.get("/sys/permission/router");
-    //     localSet("router", routers);
-    //     //添加动态路由
-    //     routers.forEach((element) => {
-    //       router.addRoute({
-    //         path: element.href,
-    //         meta: { title: element.title },
-    //         name: element.title,
-    //         component: () => import(`./views/${element.component}.vue`),
-    //       });
-    //     });
-    //   } else {
-    //     console.log(1234);
-    //     //添加动态路由
-    //     routers.forEach((element) => {
-    //       router.addRoute({
-    //         path: element.href,
-    //         meta: { title: element.title },
-    //         name: element.title,
-    //         component: () => import(`./views/${element.component}.vue`),
-    //       });
-    //     });
-    //   }
-    // };
 
     //获取用户信息
     const getUserInfo = async () => {
@@ -126,22 +91,13 @@ export default {
       );
     }
     const unwatch = router.beforeEach((to, from, next) => {
-      if (to.path == "/login" || to.path == "/register") {
-        // 如果路径是 /login 则正常执行
-        next();
+      //404页面无法通过路径判断，因此此处特殊处理
+      if (to.name == "404") {
+        state.showMenu = false;
       } else {
-        // 如果不是 /login，判断是否有 token
-        if (!localGet("token")) {
-          // 如果没有，则跳至登录页面
-          next({ path: "/login" });
-        } else {
-          // 否则继续执行
-          next();
-        }
+        state.showMenu = !noMenu.includes(to.path);
       }
-      state.showMenu = !noMenu.includes(to.path);
-      state.currentPath = to.path;
-      document.title = pathMap[to.name];
+      next();
     });
 
     onUnmounted(() => {

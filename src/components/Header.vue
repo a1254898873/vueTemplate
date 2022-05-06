@@ -1,9 +1,6 @@
 <template>
   <div class="header">
-    <div class="left">
-      <i v-if="hasBack" class="el-icon-back" @click="back"></i>
-      <span style="font-size: 20px">{{ name }}</span>
-    </div>
+    <div class="left"></div>
     <div class="right">
       <el-popover
         placement="bottom"
@@ -52,39 +49,20 @@ export default {
     const { userInfo } = storeToRefs(store);
     //实例化路由
     const router = useRouter();
-    const state = reactive({
-      name: "dashboard",
-      hasBack: false,
-    });
 
     //登出
     const logout = () => {
       axios.get("/auth/logout").then(() => {
         localRemove("token");
-        window.location.reload();
         store.userInfo = null;
+        store.routers = null;
+        router.push("/login");
       });
     };
 
-    const back = () => {
-      router.back();
-    };
-
-    //路由守卫
-    router.afterEach((to) => {
-      console.log("to", to);
-      const { id } = to.query;
-      state.name = pathMap[to.name];
-      if (id && to.name == "add") {
-        state.name = "编辑商品";
-      }
-      state.hasBack = ["level2", "level3", "order_detail"].includes(to.name);
-    });
     return {
-      ...toRefs(state),
       userInfo,
       logout,
-      back,
     };
   },
 };
