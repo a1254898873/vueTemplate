@@ -9,12 +9,12 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/introduce'
+      redirect: '/index'
     },
     {
-      path: '/introduce',
-      name: 'introduce',
-      component: () => import(/* webpackChunkName: "login" */ '../views/Introduce.vue')
+      path: '/index',
+      name: 'index',
+      component: () => import(/* webpackChunkName: "login" */ '../views/Index.vue')
     },
     {
       path: '/login',

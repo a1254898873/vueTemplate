@@ -4,15 +4,19 @@
     :index="item.pid"
   >
     <template style="padding-left: 10px" #title>
-      <i class="el-icon-menu"></i>
-      <span>{{ item.title }}</span>
+      <i class="iconfont" :class="item.icon"></i>
+      <span style="padding-left: 10px">{{ item.title }}</span>
     </template>
     <!--  如果有子级数据使用递归组件 -->
-    <MenuItem v-for="(element) in item.children" :key="element.pid" :data="element" />
+    <MenuItem
+      v-for="element in item.children"
+      :key="element.pid"
+      :data="element"
+    />
   </el-sub-menu>
-  <el-menu-item v-else :index="item.href" >
-    <i :class="item.icon"></i>
-    <span>{{ item.title }}</span>
+  <el-menu-item v-else :index="item.href">
+    <i class="iconfont" :class="item.icon"></i>
+    <span style="padding-left: 10px">{{ item.title }}</span>
   </el-menu-item>
 </template>
 

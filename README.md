@@ -1,7 +1,60 @@
-# Vue 3 + Vite
+# VueTemplate
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+------
 
-## Recommended IDE Setup
+**Project setup**
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+```plaintext
+pnpm install
+```
+
+
+
+**Compiles and hot-reloads for development**
+
+```plaintext
+pnpm run dev
+```
+
+
+
+**Compiles and minifies for production**
+
+```plaintext
+pnpm run build
+```
+
+
+
+
+
+## Introduction
+
+This is a vue template project. I make this template project for starting other project in convenience.
+
+It has basic function such as login , register, authorization management , etc.
+
+
+
+
+
+## features
+
+- login
+- register
+- user management
+- role management
+- permission management
+- department management
+
+
+
+
+
+## support
+
+- element-plus
+- axios
+- pinia
+- vue-router
+- qs
